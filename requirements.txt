@@ -1,0 +1,5 @@
+asyncio==3.4.3
+PyJWT==1.7.1
+tornado==6.1
+uvloop
+tailer

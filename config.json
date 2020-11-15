@@ -1,0 +1,10 @@
+{
+  "servers": {"servername": ["path1","path2"]},
+  "ldap_dirs": [],
+  "SERVER_PORT": 8800,
+  "LDAP_BIND_URL": "":
+  "Q"
+: Q
+
+
+}
