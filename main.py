@@ -8,8 +8,7 @@ import glob
 from access_manager import can_access,gen_token,get_server_token,require_auth
 FQDN =socket.getfqdn()
 
-def set_target(target):
-    nonlocal self
+def set_target(target,self):
     return self.request.full_url.replace(FQDN,target)
 
 @require_auth
@@ -22,7 +21,7 @@ class FileReader(RequestHandler):
         target = self.get_argument("server",None)
         if target not in FQDN:
             #self.request.full_url().replace(FQDN,target)
-            self.redirect(set_target(target), permanent=False)
+            self.redirect(set_target(target,self), permanent=False)
         filepath = self.get_argument("filepath")
 
         if mode in ["tail","head"]:
@@ -138,14 +137,15 @@ if __name__ == '__main__':
     config=get_config()
     from tornado.web import HTTPServer
     import platform
-    import uvloop
+
     from tornado.ioloop import IOLoop
     server= HTTPServer(get_app())
     server.bind(config['SERVER_PORT'])
-    server.start(0)
+    server.start()
     if platform.system()=="Windows":
-        IOLoop.start()
+        IOLoop.current().start()
     else:
+        import uvloop
         from tornado.platform.asyncio import AsyncIOMainLoop
         asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
         AsyncIOMainLoop().install()
