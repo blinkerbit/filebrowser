@@ -78,7 +78,7 @@ class ServerList(RequestHandler):
     def initialize(self):
         self.config=get_config()
 
-    async def get(self,mode,server=None):
+    async def get(self,server=None):
         if not server:
             config= get_config()
             servers  =list(config['servers'].keys())
